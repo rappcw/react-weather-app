@@ -92,6 +92,15 @@ export default function Weather() {
           <div className="forecast-row"></div>
         </div>
       </div>
+      <div>
+        <a
+          href="https://github.com/rappcw/react-weather-app"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open Source code by Charmaine Rapp
+        </a>
+      </div>
     </div>
   );
 }
