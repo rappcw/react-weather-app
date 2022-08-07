@@ -93,12 +93,21 @@ export default function App() {
         </div>
       </div>
       <div>
+        This project by{" "}
+        <a
+          href="https://friendly-empanada-03b724.netlify.app/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Charmaine Rapp
+        </a>{" "}
+        is{" "}
         <a
           href="https://github.com/rappcw/react-weather-app"
           target="_blank"
           rel="noreferrer"
         >
-          Open Source code by Charmaine Rapp
+          open-sourced
         </a>
       </div>
     </div>
