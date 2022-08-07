@@ -1,0 +1,26 @@
+:root {
+  --grey: rgb(94, 95, 95);
+  --blue: dodgerblue;
+}
+h2 {
+  padding-top: 15px;
+  font-size: 50px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+.current {
+  text-align: center;
+}
+.search-form {
+  padding: 7px;
+  margin: 0 5px 0 0;
+  border-radius: 5px;
+  color: var(--grey);
+  font-size: 17px;
+}
+.current-temp {
+  padding-top: 15px;
+  font-size: 70px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
