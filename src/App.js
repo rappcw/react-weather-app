@@ -17,8 +17,8 @@ export default function App() {
   };
 
   return (
-    <div className="Search">
-      <div className="container-fluid outline">
+    <div className="App">
+      <div className="container">
         <form>
           <div className="search-row">
             <input

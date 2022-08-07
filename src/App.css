@@ -5,7 +5,7 @@
 body {
   margin: 10px;
   color: black;
-  font-family: "Roboto", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 h1 {
   display: inline-block;
@@ -145,10 +145,5 @@ i.UV-indicator-moderate {
 .App {
   margin: 0 auto;
   max-width: 600px;
-}
-/* container of whole page */
-.outline {
   padding: 20px;
-  border: 1px solid rgb(205, 206, 206);
-  border-radius: 5px;
 }
