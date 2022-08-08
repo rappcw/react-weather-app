@@ -2,15 +2,19 @@
   --grey: rgb(94, 95, 95);
   --blue: dodgerblue;
 }
-body {
-  margin: 10px;
-  color: black;
-  font-family: "Roboto", sans-serif;
-}
+
 .App {
   margin: 0 auto;
   max-width: 600px;
-  border: 1px;
-  border-color: black;
   padding: 20px;
+  background-image: url(./images/nightCloud.jpeg);
+  background-size: cover;
+  border-radius: 5px;
+  color: white;
+  font-family: "Roboto", sans-serif;
+}
+.App footer {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
 }

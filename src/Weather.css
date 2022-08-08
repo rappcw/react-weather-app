@@ -1,16 +1,3 @@
-:root {
-  --grey: rgb(94, 95, 95);
-  --blue: dodgerblue;
-}
-h2 {
-  padding-top: 15px;
-  font-size: 50px;
-  font-weight: 700;
-  text-transform: capitalize;
-}
-.current {
-  text-align: center;
-}
 .search-form {
   padding: 7px;
   margin: 0 5px 0 0;
@@ -18,9 +5,43 @@ h2 {
   color: var(--grey);
   font-size: 17px;
 }
-.current-temp {
-  padding-top: 15px;
-  font-size: 70px;
-  font-weight: 700;
+.current {
+  text-align: center;
+}
+.location {
+  padding-top: 10px;
+  font-size: 30px;
+  font-weight: 500;
   text-transform: capitalize;
+}
+.current-celsius {
+  font-size: 70px;
+  line-height: 60px;
+  font-weight: 300;
+}
+.description {
+  font-size: 20px;
+  line-height: 50px;
+  font-weight: 500;
+}
+.min-max {
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: 500;
+}
+.col-box-large {
+  background: rgba(0, 139, 255, 0.2);
+  border-radius: 5px;
+}
+.col-box-small {
+  background: rgba(0, 139, 255, 0.2);
+  border-radius: 5px;
+  max-width: 150px;
+}
+.row-flex {
+  justify-content: center;
+  gap: 5px;
+}
+.container-split {
+  margin: 2px;
 }
