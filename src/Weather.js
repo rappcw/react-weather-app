@@ -97,7 +97,7 @@ export default function Weather(props) {
             </div>
           </div>
         </div>
-        <footer>
+        <footer className="white">
           This project by{" "}
           <a
             href="https://friendly-empanada-03b724.netlify.app/"
