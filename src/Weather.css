@@ -36,12 +36,16 @@
 .col-box-small {
   background: rgba(0, 139, 255, 0.2);
   border-radius: 5px;
-  max-width: 150px;
+  padding: 0;
 }
 .row-flex {
   justify-content: center;
   gap: 5px;
+  padding: 0;
 }
 .container-split {
-  margin: 2px;
+  margin: 5px;
+}
+a {
+  color: white;
 }

@@ -1,33 +1,19 @@
 import React, { useState } from "react";
+import WeatherMain from "./WeatherMain";
+import WeatherSecondary from "./WeatherSecondary";
+import WeatherTertiary from "./WeatherTertiary";
+import WeatherMinMax from "./WeatherMinMax";
+import WeatherWeek from "./WeatherWeek";
+import FormatDate from "./FormatDate";
 import axios from "axios";
 import "./Weather.css";
 
 export default function Weather(props) {
   let [weatherData1, setWeatherData1] = useState({});
   let [weatherData2, setWeatherData2] = useState({ ready: false });
-
-  function getWeather(response) {
-    let latitude = response.data[0].lat;
-    let longitude = response.data[0].lon;
-    let apiKey = "442a9a6ad3254edf75193558d4248959";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-    axios.get(apiUrl).then(getSecondWeather);
-    let apiUrl2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-    axios.get(apiUrl2).then(getThirdWeather);
-  }
-
-  function getSecondWeather(response) {
-    setWeatherData1({
-      cityName: response.data.city.name,
-      temp: Math.round(response.data.list[0].main.temp),
-      description: response.data.list[0].weather[0].description,
-      sunset: response.data.city.sunset,
-      wind: Math.round(response.data.list[0].wind.speed),
-    });
-  }
+  let [city, setCity] = useState(props.userCity);
 
   function getThirdWeather(response) {
-    console.log(response);
     setWeatherData2({
       ready: true,
       min: Math.round(response.data.daily[0].temp.min),
@@ -35,78 +21,85 @@ export default function Weather(props) {
       uv: Math.round(response.data.current.uvi),
       rain: Math.round(response.data.daily[0].rain),
     });
-    /*setReady(true);*/
+  }
+  function getSecondWeather(response) {
+    setWeatherData1({
+      cityName: response.data.city.name,
+      temp: Math.round(response.data.list[0].main.temp),
+      description: response.data.list[0].weather[0].description,
+      sunset: new Date(response.data.city.sunset * 1000),
+      wind: Math.round(response.data.list[0].wind.speed),
+    });
+  }
+
+  function getWeather(response) {
+    console.log(response);
+    let latitude = response.data[0].lat;
+    let longitude = response.data[0].lon;
+    let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(getSecondWeather);
+    console.log(apiUrl);
+    let apiUrl2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl2).then(getThirdWeather);
+    console.log(apiUrl2);
+  }
+
+  function search(city) {
+    let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+    let apiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`;
+    axios.get(apiUrl).then(getWeather);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    search(city);
+  }
+
+  function handleCity(event) {
+    setCity(event.target.value);
   }
 
   if (weatherData2.ready) {
     return (
       <div className="Weather">
         <div className="container">
+          <form on Submit={handleSubmit}>
+            <input
+              type="search"
+              className="search-form col-8"
+              placeholder="Enter city name"
+              autoComplete="off"
+              autoFocus="on"
+              onChange={handleCity}
+            />
+            <button type="submit" className="btn btn-primary col-3">
+              Search
+            </button>
+          </form>
           <div className="current">
-            <div className="location">{weatherData1.cityName}</div>
-            <div className="current-celsius">{weatherData1.temp}°</div>
-            <div className="description">{weatherData1.description}</div>
+            <WeatherMain data={weatherData1} />
             <div className="min-max">
-              L:{weatherData2.min}° H:{weatherData2.max}°
+              <WeatherMinMax data={weatherData2} />
             </div>
-
             <div className="container col-box-large">
-              <div className="row mt-3">
-                <div className="col-2 ">
-                  Thu
-                  <div>sun</div>
-                  <div>00°</div>
-                </div>
-                <div className="col-2">Fri</div>
-                <div className="col-2">Sat</div>
-                <div className="col-2">Sun</div>
-                <div className="col-2">Mon</div>
-                <div className="col-2">Tue</div>
-              </div>
+              <WeatherWeek />
             </div>
-
             <div className="container container-split">
-              <div className="row row-flex">
-                <div className="uv col-6 col-box-small">{weatherData2.uv}</div>
-                <div className="sunset col-6 col-box-small">
-                  {weatherData1.sunset}
-                </div>
-              </div>
+              <WeatherSecondary data={weatherData2} />
             </div>
             <div className="container container-split">
               <div className="row row-flex">
-                <div className="wind col-6 col-box-small">
-                  {weatherData1.wind}km/h
+                <div className="col col-box-small">
+                  <FormatDate date={weatherData1.sunset} />
                 </div>
-                <div className="rain col-6 col-box-small">
-                  {weatherData2.rain}ml
+                <div className="col col-box-small">
+                  <WeatherTertiary data={weatherData1} />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    );
-  } else {
-    let apiKey = "442a9a6ad3254edf75193558d4248959";
-
-    let apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${props.userCity}&appid=${apiKey}`;
-    axios.get(apiUrl).then(getWeather);
-    console.log(apiUrl);
-    return (
-      <div>
-        <form>
-          <input
-            type="search"
-            className="search-form col-8"
-            placeholder="Enter city name"
-            autoComplete="off"
-            autoFocus="on"
-          />
-          <button type="submit" className="btn btn-primary col-3">
-            Search
-          </button>
-        </form>
         <footer>
           This project by{" "}
           <a
@@ -127,5 +120,8 @@ export default function Weather(props) {
         </footer>
       </div>
     );
+  } else {
+    search(city);
+    return <div>Loading...</div>;
   }
 }
