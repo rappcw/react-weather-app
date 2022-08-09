@@ -33,16 +33,13 @@ export default function Weather(props) {
   }
 
   function getWeather(response) {
-    console.log(response);
     let latitude = response.data[0].lat;
     let longitude = response.data[0].lon;
     let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
     let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(getSecondWeather);
-    console.log(apiUrl);
     let apiUrl2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl2).then(getThirdWeather);
-    console.log(apiUrl2);
   }
 
   function search(city) {
@@ -64,7 +61,7 @@ export default function Weather(props) {
     return (
       <div className="Weather">
         <div className="container">
-          <form on Submit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <input
               type="search"
               className="search-form col-8"
