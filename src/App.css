@@ -1,14 +1,10 @@
-:root {
-  --grey: rgb(94, 95, 95);
-  --blue: dodgerblue;
-}
-
 .App {
   margin: 0 auto;
   max-width: 600px;
   padding: 20px;
   background-image: url(./images/nightCloud.jpeg);
   background-size: cover;
+  border-radius: 5px;
   border-radius: 5px;
   color: white;
   font-family: "Roboto", sans-serif;

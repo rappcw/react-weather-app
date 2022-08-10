@@ -1,5 +1,8 @@
 import React from "react";
 
+/* USES ONECALL
+https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric*/
+
 export default function WeatherSecondary(props) {
   return (
     <div className="row row-flex">

@@ -1,5 +1,8 @@
 import React from "react";
 
+/*USES FORECAST
+https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric*/
+
 export default function WeatherMain(props) {
   return (
     <div className="current">
