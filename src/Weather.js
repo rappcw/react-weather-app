@@ -9,7 +9,7 @@ import axios from "axios";
 import "./Weather.css";
 
 export default function Weather(props) {
-  let [weatherData1, setWeatherData1] = useState({});
+  let [weatherData1, setWeatherData1] = useState({ ready: false });
   let [weatherData2, setWeatherData2] = useState({ ready: false });
   let [city, setCity] = useState(props.userCity);
 
@@ -24,6 +24,7 @@ export default function Weather(props) {
   }
   function getSecondWeather(response) {
     setWeatherData1({
+      ready: true,
       cityName: response.data.city.name,
       temp: Math.round(response.data.list[0].main.temp),
       description: response.data.list[0].weather[0].description,
@@ -37,13 +38,12 @@ export default function Weather(props) {
     let longitude = response.data[0].lon;
     let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
     let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-    /*axios.get(apiUrl).then(getSecondWeather);*/
+    axios.get(apiUrl).then(getSecondWeather);
     console.log(apiUrl);
     let apiUrl2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-    /*axios.get(apiUrl2).then(getThirdWeather);*/
+    axios.get(apiUrl2).then(getThirdWeather);
     console.log(apiUrl);
   }
-
   function search(city) {
     let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
     let apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`;
