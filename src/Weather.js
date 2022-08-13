@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import WeatherMain from "./WeatherMain";
-import WeatherSecondary from "./WeatherSecondary";
-import WeatherTertiary from "./WeatherTertiary";
+import WeatherUVRain from "./WeatherUVRain";
+import WeatherWind from "./WeatherWind";
 import WeatherMinMax from "./WeatherMinMax";
 import WeatherWeek from "./WeatherWeek";
 import FormatDate from "./FormatDate";
@@ -9,27 +9,22 @@ import axios from "axios";
 import "./Weather.css";
 
 export default function Weather(props) {
-  let [weatherData1, setWeatherData1] = useState({ ready: false });
-  let [weatherData2, setWeatherData2] = useState({ ready: false });
+  let [weatherData, setWeatherData] = useState({ ready: false });
   let [city, setCity] = useState(props.userCity);
 
   function getThirdWeather(response) {
-    setWeatherData2({
+    console.log(response);
+    setWeatherData({
       ready: true,
       min: Math.round(response.data.daily[0].temp.min),
       max: Math.round(response.data.daily[0].temp.max),
       uv: Math.round(response.data.current.uvi),
       rain: Math.round(response.data.daily[0].rain),
-    });
-  }
-  function getSecondWeather(response) {
-    setWeatherData1({
-      ready: true,
-      cityName: response.data.city.name,
-      temp: Math.round(response.data.list[0].main.temp),
-      description: response.data.list[0].weather[0].description,
-      sunset: new Date(response.data.city.sunset * 1000),
-      wind: Math.round(response.data.list[0].wind.speed),
+      cityName: city,
+      temp: Math.round(response.data.current.temp),
+      description: response.data.daily[0].weather[0].description,
+      sunset: new Date(response.data.daily[0].sunset * 1000),
+      wind: Math.round(response.data.daily[0].wind_speed),
     });
   }
 
@@ -37,12 +32,8 @@ export default function Weather(props) {
     let latitude = response.data[0].lat;
     let longitude = response.data[0].lon;
     let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-    axios.get(apiUrl).then(getSecondWeather);
-    console.log(apiUrl);
-    let apiUrl2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-    axios.get(apiUrl2).then(getThirdWeather);
-    console.log(apiUrl);
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(getThirdWeather);
   }
   function search(city) {
     let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
@@ -59,7 +50,7 @@ export default function Weather(props) {
     setCity(event.target.value);
   }
 
-  if (weatherData2.ready) {
+  if (weatherData.ready) {
     return (
       <div className="Weather">
         <div className="container">
@@ -77,23 +68,23 @@ export default function Weather(props) {
             </button>
           </form>
           <div className="current">
-            <WeatherMain data={weatherData1} />
+            <WeatherMain data={weatherData} />
             <div className="min-max">
-              <WeatherMinMax data={weatherData2} />
+              <WeatherMinMax data={weatherData} />
             </div>
             <div className="container col-box-large">
               <WeatherWeek />
             </div>
             <div className="container container-split">
-              <WeatherSecondary data={weatherData2} />
+              <WeatherUVRain data={weatherData} />
             </div>
             <div className="container container-split">
               <div className="row row-flex">
                 <div className="col col-box-small">
-                  <FormatDate date={weatherData1.sunset} />
+                  <FormatDate date={weatherData.sunset} />
                 </div>
                 <div className="col col-box-small">
-                  <WeatherTertiary data={weatherData1} />
+                  <WeatherWind data={weatherData} />
                 </div>
               </div>
             </div>
