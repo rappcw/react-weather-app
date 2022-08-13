@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function FormatDate(props) {
+export default function WeatherSunset(props) {
   let hours = props.date.getHours();
   if (hours < 10) {
     hours = `0${hours}`;

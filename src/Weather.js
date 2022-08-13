@@ -4,8 +4,7 @@ import WeatherUVRain from "./WeatherUVRain";
 import WeatherWind from "./WeatherWind";
 import WeatherMinMax from "./WeatherMinMax";
 import WeatherWeek from "./WeatherWeek";
-import WeatherIcon from "./WeatherIcon";
-import FormatDate from "./FormatDate";
+import WeatherSunset from "./WeatherSunset";
 import axios from "axios";
 import "./Weather.css";
 
@@ -14,18 +13,19 @@ export default function Weather(props) {
   let [city, setCity] = useState(props.userCity);
 
   function getThirdWeather(response) {
-    console.log(response);
     setWeatherData({
       ready: true,
       min: Math.round(response.data.daily[0].temp.min),
       max: Math.round(response.data.daily[0].temp.max),
       uv: Math.round(response.data.current.uvi),
       rain: Math.round(response.data.daily[0].rain),
+      daily: response.data.daily,
       icon: response.data.current.weather[0].icon,
       cityName: city,
       temp: Math.round(response.data.current.temp),
       description: response.data.daily[0].weather[0].description,
-      sunset: new Date(response.data.daily[0].sunset * 1000),
+      sunset: new Date(response.data.current.sunset * 1000),
+      date: new Date(response.data.dt * 1000),
       wind: Math.round(response.data.daily[0].wind_speed),
     });
   }
@@ -33,12 +33,12 @@ export default function Weather(props) {
   function getWeather(response) {
     let latitude = response.data[0].lat;
     let longitude = response.data[0].lon;
-    let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+    let apiKey = "442a9a6ad3254edf75193558d4248959";
     let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(getThirdWeather);
   }
   function search(city) {
-    let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+    let apiKey = "442a9a6ad3254edf75193558d4248959";
     let apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`;
     axios.get(apiUrl).then(getWeather);
   }
@@ -75,7 +75,7 @@ export default function Weather(props) {
               <WeatherMinMax data={weatherData} />
             </div>
             <div className="container col-box-large">
-              <WeatherWeek data={weatherData} />
+              <WeatherWeek icon={weatherData.icon} data={weatherData} />
             </div>
             <div className="container container-split">
               <WeatherUVRain data={weatherData} />
@@ -83,7 +83,7 @@ export default function Weather(props) {
             <div className="container container-split">
               <div className="row row-flex">
                 <div className="col col-box-small">
-                  <FormatDate date={weatherData.sunset} />
+                  <WeatherSunset date={weatherData.sunset} />
                 </div>
                 <div className="col col-box-small">
                   <WeatherWind data={weatherData} />
