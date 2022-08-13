@@ -4,6 +4,7 @@ import WeatherUVRain from "./WeatherUVRain";
 import WeatherWind from "./WeatherWind";
 import WeatherMinMax from "./WeatherMinMax";
 import WeatherWeek from "./WeatherWeek";
+import WeatherIcon from "./WeatherIcon";
 import FormatDate from "./FormatDate";
 import axios from "axios";
 import "./Weather.css";
@@ -20,6 +21,7 @@ export default function Weather(props) {
       max: Math.round(response.data.daily[0].temp.max),
       uv: Math.round(response.data.current.uvi),
       rain: Math.round(response.data.daily[0].rain),
+      icon: response.data.current.weather[0].icon,
       cityName: city,
       temp: Math.round(response.data.current.temp),
       description: response.data.daily[0].weather[0].description,
@@ -73,7 +75,7 @@ export default function Weather(props) {
               <WeatherMinMax data={weatherData} />
             </div>
             <div className="container col-box-large">
-              <WeatherWeek />
+              <WeatherWeek data={weatherData} />
             </div>
             <div className="container container-split">
               <WeatherUVRain data={weatherData} />
