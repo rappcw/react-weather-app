@@ -75,7 +75,7 @@ export default function Weather(props) {
               <WeatherMinMax data={weatherData} />
             </div>
             <div className="container col-box-large">
-              <WeatherWeek icon={weatherData.icon} data={weatherData} />
+              <WeatherWeek all={weatherData} />
             </div>
             <div className="container container-split">
               <WeatherUVRain data={weatherData} />
