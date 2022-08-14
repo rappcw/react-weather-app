@@ -7,9 +7,10 @@ export default function WeatherWeek(props) {
   return (
     <div className="WeatherWeek  row mt-3">
       {responseDaily.map(function (dailyForecast, index) {
-        if (index < 6) {
+        if (index < 7 && index > 0) {
           return (
             <span className="col-2" key={index}>
+              {index}
               <WeatherDay day={dailyForecast} />
             </span>
           );
