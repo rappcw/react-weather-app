@@ -13,6 +13,8 @@ export default function WeatherWeek(props) {
               <WeatherDay day={dailyForecast} />
             </span>
           );
+        } else {
+          return <div>{null}</div>;
         }
       })}
     </div>
